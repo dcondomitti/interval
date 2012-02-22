@@ -1,6 +1,6 @@
 require 'concurrent/version'
 require 'concurrent/middleware/timing'
-require 'concurrent/engine'
+require 'concurrent/railtie' if defined? ::Rails::Railtie
 
 module Concurrent
 
