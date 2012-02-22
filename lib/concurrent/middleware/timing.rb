@@ -18,7 +18,6 @@ module Concurrent
 
       def each(&block)
         duration = @stop - @start
-        block.call("<!-- #{duration} -->")
         @response.each(&block)
       end
     end
