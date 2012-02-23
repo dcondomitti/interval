@@ -1,10 +1,21 @@
 # Concurrent
 
-This Rack middleware records execution times and controller action names for all web requests to Rails applications. This is accomplished by wrapping all calls (similar to Rack::Runtime.) 
+This Rack middleware records execution times and controller action names for all web requests to Rails applications. This is accomplished by wrapping all calls (similar to Rack::Runtime.) Collected data is sent in a StatsD-compatible format over UDP in the background to the reporting service.
 
 ## Installation
 
 Simply add it to the Gemfile of your Rails application and metrics will automatically be collected. Extra HTTP headers (`X-Concurrent-Time` and `X-Concurrent-Action`) will be injected when in development mode.
+
+## Configuration
+
+No configuration is required to use this gem in development mode. If unconfigured, it will just inject the timing and alias HTTP response headers and serialize statistics data to disk in `Rails.root/log`. The application name is automatically detected by the Rails application name but can be overridden at run-time or in an initializer.
+
+```
+Concurrent::Config.configure do |config|
+  config.api_key = 'abcdef012345'
+  config.application_name = 'My Awesome App'
+end
+```
 
 ## Usage
 
