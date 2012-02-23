@@ -12,6 +12,7 @@ module Concurrent
     # overridden by setting Concurrent::Config.configure.alias.
     def set_concurrent_defaults
       Concurrent::Config.configure do |config|
+        config.alias = nil
         config.controller = params[:controller]
         config.action = params[:action]
       end
