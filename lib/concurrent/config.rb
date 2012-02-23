@@ -5,6 +5,7 @@ module Concurrent
       attr_accessor :configuration
     end
 
+    # http://robots.thoughtbot.com/post/344833329/mygem-configure-block
     def self.configure
       self.configuration ||= Configuration.new
       yield(configuration)
