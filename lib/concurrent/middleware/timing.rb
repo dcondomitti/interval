@@ -33,7 +33,7 @@ module Concurrent
 
       def action_header
         return ::Concurrent::Config.configuration.alias if ::Concurrent::Config.configuration.alias
-        '%s#%s' % [::Concurrent::Config.configuration.controller, ::Concurrent::Config.configuration.action] unless ::Concurrent::Config.configuration.alias
+        '%s#%s' % [::Concurrent::Config.configuration.controller, ::Concurrent::Config.configuration.action]
       end
     end
   end
