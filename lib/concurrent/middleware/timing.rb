@@ -17,7 +17,7 @@ module Concurrent
         @status, @headers, @response = @app.call(env)
         duration = Time.now - start
 
-        inject_headers(duration) if Rails.env.development?
+        inject_headers(duration) if (defined? Rails && Rails.env.development?) || env['RACK_ENV'] == 'development'
         
         [@status, @headers, self]
       end
