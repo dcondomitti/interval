@@ -15,7 +15,7 @@ module Concurrent
     # Concurrent::Config.configuration.alias. Maybe a helper method on the main module? ugh.
 
     class Configuration
-      attr_accessor :controller, :action, :alias
+      attr_accessor :controller, :action, :alias, :application_name, :api_key
 
       def initialize
 
