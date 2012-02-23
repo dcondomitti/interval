@@ -18,7 +18,7 @@ module Concurrent
       attr_accessor :controller, :action, :alias, :application_name, :api_key
 
       def initialize
-
+        @application_name ||= Rails.application.class.to_s.split("::").first if defined? Rails
       end
     end
   end
