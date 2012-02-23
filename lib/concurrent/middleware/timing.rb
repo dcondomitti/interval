@@ -15,11 +15,10 @@ module Concurrent
         duration = Time.now - start
 
         if Rails.env.development?
+          @headers['X-Concurrent-Time'] = '%0.6f' % duration
           if ::Concurrent::Config.configuration.alias
-            @headers['X-Concurrent-Time'] = '%0.6f' % duration
             @headers['X-Concurrent-Action'] = ::Concurrent::Config.configuration.alias
           else
-            @headers['X-Concurrent'] = '%0.6f' % duration
             @headers['X-Concurrent-Action'] = '%s#%s' % [::Concurrent::Config.configuration.controller, ::Concurrent::Config.configuration.action]
           end
         end
