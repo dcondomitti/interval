@@ -10,14 +10,14 @@ module Concurrent
       end
 
       def _call(env)
-        @start = Time.now
+        start = Time.now
         @status, @headers, @response = @app.call(env)
-        @stop = Time.now
+        duration = Time.now - start
+        @headers['X-Concurrent'] = '%0.6f' % duration
         [@status, @headers, self]
       end
 
       def each(&block)
-        duration = @stop - @start
         @response.each(&block)
       end
     end
