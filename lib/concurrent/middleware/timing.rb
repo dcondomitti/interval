@@ -5,10 +5,13 @@ module Concurrent
         @app = app
       end
 
+      # Duplicate #call for thread-safe purposes. Code from railscasts.org comments.
       def call(env)
         dup._call(env)
       end
 
+      # Wrap #call to track response processing time. Inject headers containing timing
+      # and action#controller or alias name when in development mode.
       def _call(env)
         start = Time.now
         @status, @headers, @response = @app.call(env)
