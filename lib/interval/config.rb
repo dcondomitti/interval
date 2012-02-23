@@ -19,7 +19,7 @@ module Interval
 
       def initialize
         @application_name ||= Rails.application.class.to_s.split("::").first if defined? Rails
-        @api_endpoint     ||= 'interval.condomitti.com'
+        @api_endpoint     ||= 'converge.interval.io'
       end
     end
   end
