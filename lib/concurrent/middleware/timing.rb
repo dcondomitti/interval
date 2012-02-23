@@ -17,19 +17,23 @@ module Concurrent
         @status, @headers, @response = @app.call(env)
         duration = Time.now - start
 
-        if Rails.env.development?
-          concurrent_header = '%s#%s' % [::Concurrent::Config.configuration.controller, ::Concurrent::Config.configuration.action] unless ::Concurrent::Config.configuration.alias
-          concurrent_header = ::Concurrent::Config.configuration.alias if ::Concurrent::Config.configuration.alias
-    
-          @headers['X-Concurrent-Action'] = concurrent_header
-          @headers['X-Concurrent-Time'] = '%0.6f' % duration
-        end
+        inject_headers(duration) if Rails.env.development?
         
         [@status, @headers, self]
       end
 
       def each(&block)
         @response.each(&block)
+      end
+
+      def inject_headers(duration)
+        @headers['X-Concurrent-Action'] = action_header
+        @headers['X-Concurrent-Time'] = '%0.6f' % duration
+      end
+
+      def action_header
+        return ::Concurrent::Config.configuration.alias if ::Concurrent::Config.configuration.alias
+        '%s#%s' % [::Concurrent::Config.configuration.controller, ::Concurrent::Config.configuration.action] unless ::Concurrent::Config.configuration.alias
       end
     end
   end
