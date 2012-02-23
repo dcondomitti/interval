@@ -14,12 +14,14 @@ module Concurrent
         @status, @headers, @response = @app.call(env)
         duration = Time.now - start
 
-        if ::Concurrent::Config.configuration.alias
-          @headers['X-Concurrent-Time'] = '%0.6f' % duration
-          @headers['X-Concurrent-Action'] = ::Concurrent::Config.configuration.alias
-        else
-          @headers['X-Concurrent'] = '%0.6f' % duration
-          @headers['X-Concurrent-Action'] = '%s#%s' % [::Concurrent::Config.configuration.controller, ::Concurrent::Config.configuration.action]
+        if Rails.env.development?
+          if ::Concurrent::Config.configuration.alias
+            @headers['X-Concurrent-Time'] = '%0.6f' % duration
+            @headers['X-Concurrent-Action'] = ::Concurrent::Config.configuration.alias
+          else
+            @headers['X-Concurrent'] = '%0.6f' % duration
+            @headers['X-Concurrent-Action'] = '%s#%s' % [::Concurrent::Config.configuration.controller, ::Concurrent::Config.configuration.action]
+          end
         end
         
         [@status, @headers, self]
