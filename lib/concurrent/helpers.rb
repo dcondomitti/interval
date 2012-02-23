@@ -7,8 +7,6 @@ module Concurrent
     def self.included(base)
       base.prepend_before_filter :set_concurrent_defaults
     end
-
-    # TODO: Figure out a better way to set the method alias instead of the mess below
     
     # Automatically set the controller name and action on each request, can be
     # overridden by setting Concurrent::Config.configure.alias.

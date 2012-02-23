@@ -10,6 +10,9 @@ module Concurrent
       yield(configuration)
     end
 
+    # TODO: Figure out a better way to set the method alias instead of 
+    # Concurrent::Config.configuration.alias. Maybe a helper method on the main module? ugh.
+
     class Configuration
       attr_accessor :controller, :action, :alias
 
